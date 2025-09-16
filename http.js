@@ -2,6 +2,8 @@ const http = require('http');
 
 const user = require('./users.json');
 
+const posts = require('./posts.json');
+
 const PORT = 8000;
 
 const server = http.createServer((req, res)=>{
