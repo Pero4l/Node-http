@@ -60,7 +60,14 @@ if(req.method ==='POST' && req.url === '/login'){
     })
 }
 
-//  Post creation endpoint
+//  Posts endpoint
+
+    if(req.method === 'GET' && req.url === '/posts'){
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({posts: []}));
+    }
+
 
 
 server.listen(PORT, ()=>{
