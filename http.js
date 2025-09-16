@@ -1,4 +1,5 @@
 const http = require('http');
+const fs = require('fs');
 
 const user = require('./users.json');
 
@@ -24,6 +25,14 @@ const server = http.createServer((req, res)=>{
             user.push(JSON.parse(body));
             console.log(user);
 
+            fs.writeFile('./users.json', JSON.stringify(user, null, 2), (err)=>{
+                if(err){
+                    console.error('Error writing to file', err);
+                    res.statusCode = 500;
+                    return res.end(JSON.stringify({message: 'Internal Server Error'}));
+                }
+            })
+
             res.end(JSON.stringify({message: 'User registered successfully', data: JSON.parse(body)}));
         })
     }else if (req.method === 'GET' && req.url === '/'){
@@ -39,36 +48,36 @@ const server = http.createServer((req, res)=>{
 
 // Login endpoint
 
-if(req.method ==='POST' && req.url === '/login'){
-    let body = ''
+// if(req.method ==='POST' && req.url === '/login'){
+//     let body = ''
 
-    req.on('data', (chunk)=>{
-        body += chunk.toString()
-    })
+//     req.on('data', (chunk)=>{
+//         body += chunk.toString()
+//     })
 
-    req.on('end', ()=>{
-        statusCode = 200
-        res.setHeader('Content-Type', 'application/json')
+//     req.on('end', ()=>{
+//         statusCode = 200
+//         res.setHeader('Content-Type', 'application/json')
 
-        const {username, password} = JSON.parse(body)
-        const foundUser = user.find(u => u.username === username && u.password === password)
+//         const {username, password} = JSON.parse(body)
+//         const foundUser = user.find(u => u.username === username && u.password === password)
 
-        if(foundUser){
-            res.end(JSON.stringify({message: 'Login successful', user: foundUser}))
-        } else{
-            res.statusCode = 401
-            res.end(JSON.stringify({message: 'Invalid credentials'}))
-        }
-    })
-}
+//         if(foundUser){
+//             res.end(JSON.stringify({message: 'Login successful', user: foundUser}))
+//         } else{
+//             res.statusCode = 401
+//             res.end(JSON.stringify({message: 'Invalid credentials'}))
+//         }
+//     })
+// }
 
 //  Posts endpoint
 
-    if(req.method === 'GET' && req.url === '/posts'){
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({posts: []}));
-    }
+    // if(req.method === 'GET' && req.url === '/posts'){
+    //     res.statusCode = 200;
+    //     res.setHeader('Content-Type', 'application/json');
+    //     res.end(JSON.stringify({posts: []}));
+    // }
 
 
 

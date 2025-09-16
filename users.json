@@ -1,8 +1,17 @@
 [
-    {
+  {
     "username": "alice",
-    "email": "test@gmail.com", 
-    "password": "alice123" 
-    }
-
+    "email": "test@gmail.com",
+    "password": "alice123"
+  },
+  {
+    "name": "test",
+    "email": "test@gmail.com",
+    "password": "testing123"
+  },
+  {
+    "name": "ptb",
+    "email": "ptb@gmail.com",
+    "password": "ptb123"
+  }
 ]
