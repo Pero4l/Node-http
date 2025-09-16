@@ -37,9 +37,24 @@ const server = http.createServer((req, res)=>{
 if(req.method ==='POST' && req.url === '/login'){
     let body = ''
 
-    req.on('data', (chunk)=>{{
-        
-    }})
+    req.on('data', (chunk)=>{
+        body += chunk.toString()
+    })
+
+    req.on('end', ()=>{
+        statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+
+        const {username, password} = JSON.parse(body)
+        const foundUser = user.find(u => u.username === username && u.password === password)
+
+        if(foundUser){
+            res.end(JSON.stringify({message: 'Login successful', user: foundUser}))
+        } else{
+            res.statusCode = 401
+            res.end(JSON.stringify({message: 'Invalid credentials'}))
+        }
+    })
 }
 
 server.listen(PORT, ()=>{
