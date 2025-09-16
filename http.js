@@ -1,6 +1,10 @@
-const http = require("http");
+const http = require('http');
+const url = require('url');
 
-const file = './data.json'
+const file = './users.json'
+
+const {method, req} = require("node:http");
+
 
 http.createServer((req, res) => {
 
@@ -14,8 +18,17 @@ http.createServer((req, res) => {
 
         response = "<h1>Landing page</h1>"
 
-    }else if(req.url == "register"){
+    }else if(url == "/register" && method == "POST"){
         const {name, email, password} = req.body
+
+        contentType = "application/json"
+
+        if(!name || !email || !password){
+        return res.status(400).json({
+            success: false,
+            message: "Name, Email and Password is required"
+        })
+    }
 
         const user = {
             name: name,
@@ -23,6 +36,17 @@ http.createServer((req, res) => {
             password: password
         }
 
+        file.push(user)
+
+        console.log(file);
+
+        response = JSON.stringify({
+            status: "success",
+            code: 201,
+            message: "User registered successfully",
+            user: user
+        })
+        
 
     }else{
         statusCode = 404;
@@ -35,7 +59,6 @@ http.createServer((req, res) => {
             message: "Page not found"
         })
     }
-
     // res.writeHead(200, {
     //     'content-type': 'text/plain',
     //     'connection': 'keep-alive'
@@ -43,7 +66,7 @@ http.createServer((req, res) => {
 
     res.end(response)
     
-}).listen(5000, () => {
+}).listen(7000, () => {
     console.log("Server is up!!");
     
 })
