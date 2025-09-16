@@ -33,6 +33,15 @@ const server = http.createServer((req, res)=>{
     } 
 })
 
+
+if(req.method ==='POST' && req.url === '/login'){
+    let body = ''
+
+    req.on('data', (chunk)=>{{
+        
+    }})
+}
+
 server.listen(PORT, ()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
 })
