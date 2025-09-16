@@ -6,6 +6,8 @@ const PORT = 8000;
 
 const server = http.createServer((req, res)=>{
 
+    // Registration endpoint
+
     if(req.method === 'POST' && req.url === '/register'){
         let body = '';
 
@@ -33,6 +35,7 @@ const server = http.createServer((req, res)=>{
     } 
 })
 
+// Login endpoint
 
 if(req.method ==='POST' && req.url === '/login'){
     let body = ''
@@ -56,6 +59,9 @@ if(req.method ==='POST' && req.url === '/login'){
         }
     })
 }
+
+//  Post creation endpoint
+
 
 server.listen(PORT, ()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
